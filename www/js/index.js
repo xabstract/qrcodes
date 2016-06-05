@@ -7,7 +7,15 @@ var resultDiv;
 document.addEventListener("deviceready", init, false);
 function init() {
     
-    var server = require('http').createServer();
+    var socket = io.connect('http://192.168.0.4:3000');
+        socket.on('connect', function() {
+        socket.on('scanCode', function(text) {
+            alert("escaneo?"+text);
+            startScan();
+        });
+    });
+    
+/*    var server = require('http').createServer();
     var io = require('socket.io')(server);
 
     io.sockets.on('connection', function (socket) {
@@ -21,15 +29,18 @@ function init() {
     });
 
     server.listen(3000);
-
-    document.querySelector("#startScan").addEventListener("touchend", startScan, false);
-    resultDiv = document.querySelector("#results");
     
     socket.on('connect', function() {
       socket.on('text', function(text) {
         alert(text);
        });
      });
+*/
+
+    document.querySelector("#startScan").addEventListener("touchend", startScan, false);
+    resultDiv = document.querySelector("#results");
+    
+
 }
 
 function startScan() {
