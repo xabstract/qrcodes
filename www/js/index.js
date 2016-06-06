@@ -3,14 +3,14 @@
 
 
 var resultDiv;
+var socket;
 
 document.addEventListener("deviceready", init, false);
 function init() {
     
-    var socket = io.connect('http://192.168.0.4:3000');
+    socket = io.connect('http://192.168.0.4:3000');
         socket.on('connect', function() {
-        socket.on('scanCode', function(text) {
-            alert("escaneo?"+text);
+        socket.on('scanQR', function(text) {
             startScan();
         });
     });
@@ -51,6 +51,8 @@ function startScan() {
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
             resultDiv.innerHTML = s;
+            alert("escaned:"+s);
+            socket.emit('scanned',s);
         },
         function (error) {
             alert("Scanning failed: " + error);
