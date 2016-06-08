@@ -8,7 +8,8 @@ var socket;
 document.addEventListener("deviceready", init, false);
 function init() {
     
-    socket = io.connect('http://192.168.0.4:3000');
+    //socket = io.connect('http://192.168.0.4:3000');
+    socket = io.connect('http://10.100.0.29:3000');
         socket.on('connect', function() {
         socket.on('scanQR', function(text) {
             startScan();
@@ -51,8 +52,9 @@ function startScan() {
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
             resultDiv.innerHTML = s;
-            alert("escaned:"+s);
-            socket.emit('scanned',s);
+            if(confim("enviar codigo QR:"+s)){
+                socket.emit('scanned',result.text);
+            }
         },
         function (error) {
             alert("Scanning failed: " + error);
