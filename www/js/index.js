@@ -48,13 +48,13 @@ function startScan() {
 
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-            var s = "Result: " + result.text + "<br/>" +
+            /*var s = "Result: " + result.text + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
             resultDiv.innerHTML = s;
-            if(confim("enviar codigo QR:"+s)){
+            if(confim("enviar codigo QR:"+s)){*/
                 socket.emit('scanned',result.text);
-            }
+            //}
         },
         function (error) {
             alert("Scanning failed: " + error);
